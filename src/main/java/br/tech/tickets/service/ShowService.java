@@ -1,6 +1,7 @@
 package br.tech.tickets.service;
 
 import br.tech.tickets.domain.dto.ShowResponse;
+import br.tech.tickets.domain.entity.Artist;
 import br.tech.tickets.domain.entity.Show;
 import br.tech.tickets.domain.dto.ShowRequest;
 import br.tech.tickets.repository.ShowRepository;
@@ -37,7 +38,7 @@ public class ShowService {
         );
     }
 
-    public List<ShowResponse> consultShowsByArtist(String artist){
+    public List<ShowResponse> consultShowsByArtist(Artist artist){
         List<Show> shows = showRepository.findByArtist(artist);
 
         return shows.stream().map((show) -> new ShowResponse(

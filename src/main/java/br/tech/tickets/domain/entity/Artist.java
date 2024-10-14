@@ -5,11 +5,12 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "tb_artist")
 public class Artist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long artist_id;
     private String name;
     private String musicalType;
 
@@ -17,11 +18,11 @@ public class Artist {
     private List<Show> shows;
 
     public Long getId() {
-        return id;
+        return artist_id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.artist_id = id;
     }
 
     public String getName() {
