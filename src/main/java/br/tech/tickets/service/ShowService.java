@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Service
 public class ShowService {
 
-    private ShowRepository showRepository;
+    private final ShowRepository showRepository;
 
     public ShowService(ShowRepository showRepository) {
         this.showRepository = showRepository;

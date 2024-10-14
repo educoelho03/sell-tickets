@@ -13,17 +13,20 @@ public class Show {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long showId;
 
-    private String artist;
+    @ManyToOne
+    @JoinColumn(name = "artist_id", nullable = false) // Adiciona a chave estrangeira
+    private Artist artist;
+
     private String local;
     private LocalDate date;
     private LocalTime horary;
     private double price;
 
-    public String getArtist() {
+    public Artist getArtist() {
         return artist;
     }
 
-    public void setArtist(String artist) {
+    public void setArtist(Artist artist) {
         this.artist = artist;
     }
 
