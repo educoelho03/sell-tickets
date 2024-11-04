@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController("/show")
@@ -30,6 +31,22 @@ public class ShowController {
     public ResponseEntity<List<ShowResponse>> consult(@PathVariable Artist artist){
         List<ShowResponse> showResponse = showService.consultShowsByArtist(artist);
         return ResponseEntity.status(HttpStatus.OK).body(showResponse);
+    }
+
+    @GetMapping("/consult/{date}")
+    public ResponseEntity<List<ShowResponse>> consultAllShowsByDate(@PathVariable LocalDate date){
+        List<ShowResponse> showResponses = showService.consultShowsByDate(date);
+        return ResponseEntity.status(HttpStatus.OK).body(showResponses);
+    }
+
+    @PostMapping("/{id}/sell")
+    public ResponseEntity<String> sellTicket(@PathVariable Long showId, @RequestParam int quantity){
+        try{
+            showService.sellingTickets(showId, quantity);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
 }

@@ -48,4 +48,18 @@ public class Artist {
     public void setShows(List<Show> shows) {
         this.shows = shows;
     }
+
+    public Artist(String name, String musicalType, List<Show> shows) {
+        this.name = name;
+        this.musicalType = musicalType;
+        this.shows = shows;
+    }
+
+    public Artist(String name, String musicalType) {
+        this.name = name;
+        this.musicalType = musicalType;
+    }
+
+    public Artist() {
+    }
 }

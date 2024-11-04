@@ -7,6 +7,7 @@ import br.tech.tickets.domain.dto.ShowRequest;
 import br.tech.tickets.repository.ShowRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,7 @@ public class ShowService {
         newShow.setDate(showRequest.date());
         newShow.setHorary(showRequest.horary());
         newShow.setPrice(showRequest.price());
+        newShow.setAvailableTickets(showRequest.availableTickets());
 
         Show savedShow = showRepository.save(newShow);
 
@@ -34,7 +36,9 @@ public class ShowService {
                 savedShow.getLocal(),
                 savedShow.getDate(),
                 savedShow.getHorary(),
-                savedShow.getPrice()
+                savedShow.getPrice(),
+                savedShow.getAvailableTickets(),
+                savedShow.getSoldTickets()
         );
     }
 
@@ -46,8 +50,35 @@ public class ShowService {
                 show.getLocal(),
                 show.getDate(),
                 show.getHorary(),
-                show.getPrice()
+                show.getPrice(),
+                show.getAvailableTickets(),
+                show.getSoldTickets()
         )).collect(Collectors.toList());
+    }
 
+    public List<ShowResponse> consultShowsByDate(LocalDate date) {
+        List<Show> shows = showRepository.findByDate(date);
+
+        return shows.stream().map((show) -> new ShowResponse(
+                show.getArtist(),
+                show.getLocal(),
+                show.getDate(),
+                show.getHorary(),
+                show.getPrice(),
+                show.getAvailableTickets(),
+                show.getSoldTickets()
+        )).collect(Collectors.toList());
+    }
+
+    public void sellingTickets(Long showId, int quantity) throws Exception {
+        Show updatedShow = showRepository.findById(showId)
+                .orElseThrow(() -> new Exception("Show Not Found"));
+
+        if(updatedShow.getSoldTickets() + quantity > updatedShow.getAvailableTickets()){
+            throw new Exception("Ingressos insuficientes");
+        }
+
+        updatedShow.setAvailableTickets(updatedShow.getSoldTickets() + quantity);
+        showRepository.save(updatedShow);
     }
 }
