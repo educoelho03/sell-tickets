@@ -14,8 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,9 +47,7 @@ class ShowServiceTest {
                 1L,
                 artist,
                 "São Paulo",
-                LocalDate.of(2020, 10, 20),
-                LocalTime.of(21, 0),
-                300.00,
+                LocalDateTime.of(2020, 10, 20, 21, 0),
                 1000,
                 0
         );
@@ -59,43 +56,36 @@ class ShowServiceTest {
         savedShow.setArtist(showRequest.artist());
         savedShow.setLocal(showRequest.local());
         savedShow.setDate(showRequest.date());
-        savedShow.setHorary(showRequest.horary());
-        savedShow.setPrice(showRequest.price());
         savedShow.setAvailableTickets(showRequest.availableTickets());
         savedShow.setSoldTickets(showRequest.soldTickets());
 
-
         when(showRepositoryMock.save(any(Show.class))).thenReturn(savedShow);
-
 
         // ACT
         ShowResponse showResponse = showService.registerShow(showRequest);
 
-        // Assertions
+        // ASSERTIONS
         assertNotNull(showResponse);
-        assertEquals(showResponse.artist(), showResponse.artist());
-        assertEquals(showResponse.local(), showResponse.local());
-        assertEquals(showResponse.date(), showResponse.date());
-        assertEquals(showResponse.horary(), showResponse.horary());
-        assertEquals(showResponse.price(), showResponse.price());
-        assertEquals(showResponse.availableTickets(), showResponse.availableTickets());
-        assertEquals(showResponse.soldTickets(), showResponse.soldTickets());
+        assertEquals(showRequest.artist().getName(), showResponse.artist().getName());
+        assertEquals(showRequest.local(), showResponse.local());
+        assertEquals(showRequest.date(), showResponse.date());
+        assertEquals(showRequest.availableTickets(), showResponse.availableTickets());
+        assertEquals(showRequest.soldTickets(), showResponse.soldTickets());
 
-        // verifica se tudo foi salvo corretamente
-        verify(showRepositoryMock.save(any(Show.class)));
+        verify(showRepositoryMock).save(any(Show.class)); // Não é necessário passar `any()` dentro do verify.
     }
 
     @Test
-    @DisplayName("Should be return shows by artist name")
+    @DisplayName("Should return shows by artist name")
     void consultShowsByArtist() {
         Artist artist = new Artist("Travis Scott", "Trap");
         Show show1 = new Show();
         show1.setArtist(artist);
-        show1.setDate(LocalDate.of(2023, 5, 20));
+        show1.setDate(LocalDateTime.of(2023, 5, 20, 21, 0));
 
         Show show2 = new Show();
         show2.setArtist(artist);
-        show2.setDate(LocalDate.of(2021, 1, 12));
+        show2.setDate(LocalDateTime.of(2021, 1, 12, 20, 30));
 
         when(showRepositoryMock.findByArtist(artist)).thenReturn(List.of(show1, show2));
 
@@ -108,11 +98,11 @@ class ShowServiceTest {
     }
 
     @Test
-    @DisplayName("should be return shows by date")
+    @DisplayName("Should return shows by date")
     void consultShowsByDate() {
         Artist artist = new Artist("Travis Scott", "Trap");
         Artist artist2 = new Artist("Bruno Mars", "Pop");
-        LocalDate date = LocalDate.of(2023, 10, 20);
+        LocalDateTime date = LocalDateTime.of(2023, 10, 20, 21, 0);  // Corrigido para LocalDateTime
 
         Show show1 = new Show();
         show1.setArtist(artist);
@@ -131,7 +121,6 @@ class ShowServiceTest {
 
         assertEquals(show1.getDate(), showResponseList.get(0).date());
         assertEquals(show2.getDate(), showResponseList.get(1).date());
-
 
         assertEquals(show1.getDate().getDayOfMonth(), showResponseList.get(0).date().getDayOfMonth());
         assertEquals(show1.getDate().getMonth(), showResponseList.get(0).date().getMonth());

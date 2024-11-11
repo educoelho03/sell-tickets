@@ -8,6 +8,7 @@ import br.tech.tickets.repository.ShowRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,8 +26,6 @@ public class ShowService {
         newShow.setArtist(showRequest.artist());
         newShow.setLocal(showRequest.local());
         newShow.setDate(showRequest.date());
-        newShow.setHorary(showRequest.horary());
-        newShow.setPrice(showRequest.price());
         newShow.setAvailableTickets(showRequest.availableTickets());
 
         Show savedShow = showRepository.save(newShow);
@@ -35,8 +34,6 @@ public class ShowService {
                 savedShow.getArtist(),
                 savedShow.getLocal(),
                 savedShow.getDate(),
-                savedShow.getHorary(),
-                savedShow.getPrice(),
                 savedShow.getAvailableTickets(),
                 savedShow.getSoldTickets()
         );
@@ -49,22 +46,18 @@ public class ShowService {
                 show.getArtist(),
                 show.getLocal(),
                 show.getDate(),
-                show.getHorary(),
-                show.getPrice(),
                 show.getAvailableTickets(),
                 show.getSoldTickets()
         )).collect(Collectors.toList());
     }
 
-    public List<ShowResponse> consultShowsByDate(LocalDate date) {
+    public List<ShowResponse> consultShowsByDate(LocalDateTime date) {
         List<Show> shows = showRepository.findByDate(date);
 
         return shows.stream().map((show) -> new ShowResponse(
                 show.getArtist(),
                 show.getLocal(),
                 show.getDate(),
-                show.getHorary(),
-                show.getPrice(),
                 show.getAvailableTickets(),
                 show.getSoldTickets()
         )).collect(Collectors.toList());

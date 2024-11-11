@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,12 +35,12 @@ class ShowRepositoryTest {
 
         Show show1 = new Show();
         show1.setArtist(artist);
-        show1.setDate(LocalDate.of(2023, 5, 20));
+        show1.setDate(LocalDate.of(2023, 5, 20).atStartOfDay());
         entityManager.persist(show1);
 
         Show show2 = new Show();
         show2.setArtist(artist);
-        show2.setDate(LocalDate.of(2022, 1, 15));
+        show2.setDate(LocalDate.of(2022, 1, 15).atStartOfDay());
         entityManager.persist(show2);
 
         // ACT
@@ -66,7 +67,7 @@ class ShowRepositoryTest {
     @Test
     @DisplayName("Should be return a list successfully ")
     void findByDate_HasShow(){
-        LocalDate date = LocalDate.of(2023, 10, 20);
+        LocalDateTime date = LocalDate.of(2023, 10, 20).atStartOfDay();
         Artist artist = new Artist("Travis Scott", "Trap");
         Show show = new Show();
 

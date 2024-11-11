@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController("/show")
@@ -34,7 +35,7 @@ public class ShowController {
     }
 
     @GetMapping("/consult/{date}")
-    public ResponseEntity<List<ShowResponse>> consultAllShowsByDate(@PathVariable LocalDate date){
+    public ResponseEntity<List<ShowResponse>> consultAllShowsByDate(@PathVariable LocalDateTime date){
         List<ShowResponse> showResponses = showService.consultShowsByDate(date);
         return ResponseEntity.status(HttpStatus.OK).body(showResponses);
     }
