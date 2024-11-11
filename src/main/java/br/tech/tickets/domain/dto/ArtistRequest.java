@@ -8,9 +8,5 @@ public record ArtistRequest(
         Long artist_id,
         String name,
         String musicalType,
-        List<ShowRequest> shows
-) {
-
-
-
+        List<ShowRequest> shows ) {
 }
