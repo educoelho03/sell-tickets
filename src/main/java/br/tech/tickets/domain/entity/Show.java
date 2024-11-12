@@ -17,7 +17,7 @@ public class Show {
     private Long showId;
 
     @ManyToOne
-    @JoinColumn(name = "artist_id", nullable = false) // Adiciona a chave estrangeira
+    @JoinColumn(name = "artist_id", nullable = false)
     private Artist artist;
 
     private String local;
@@ -26,7 +26,11 @@ public class Show {
     private Integer soldTickets;
 
     @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
-    private List<Ticket> ticket;
+    private List<Ticket> tickets;
+
+    @OneToMany(mappedBy = "show")
+    private List<Seat> seats;
+
 
     public Show(Artist artist, String local, LocalDateTime date, Integer availableTickets, Integer soldTickets) {
         this.artist = artist;
@@ -88,10 +92,18 @@ public class Show {
     }
 
     public List<Ticket> getTicket() {
-        return ticket;
+        return tickets;
     }
 
     public void setTicket(List<Ticket> ticket) {
-        this.ticket = ticket;
+        this.tickets = ticket;
+    }
+
+    public List<Seat> getSeat() {
+        return seats;
+    }
+
+    public void setSeat(List<Seat> seat) {
+        this.seats = seat;
     }
 }

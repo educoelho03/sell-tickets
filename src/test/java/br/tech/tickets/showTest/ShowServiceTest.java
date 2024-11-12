@@ -3,7 +3,9 @@ package br.tech.tickets.showTest;
 import br.tech.tickets.domain.dto.ShowRequest;
 import br.tech.tickets.domain.dto.ShowResponse;
 import br.tech.tickets.domain.entity.Artist;
+import br.tech.tickets.domain.entity.Seat;
 import br.tech.tickets.domain.entity.Show;
+import br.tech.tickets.repository.SeatRepository;
 import br.tech.tickets.repository.ShowRepository;
 import br.tech.tickets.service.ShowService;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,8 +22,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
 class ShowServiceTest {

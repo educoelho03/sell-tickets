@@ -2,8 +2,12 @@ package br.tech.tickets.service;
 
 import br.tech.tickets.domain.dto.ShowResponse;
 import br.tech.tickets.domain.entity.Artist;
+import br.tech.tickets.domain.entity.Seat;
 import br.tech.tickets.domain.entity.Show;
 import br.tech.tickets.domain.dto.ShowRequest;
+import br.tech.tickets.exception.SeatNotFoundException;
+import br.tech.tickets.exception.ShowNotFoundException;
+import br.tech.tickets.repository.SeatRepository;
 import br.tech.tickets.repository.ShowRepository;
 import org.springframework.stereotype.Service;
 
@@ -65,7 +69,7 @@ public class ShowService {
 
     public void sellingTickets(Long showId, int quantity) throws Exception {
         Show updatedShow = showRepository.findById(showId)
-                .orElseThrow(() -> new Exception("Show Not Found"));
+                .orElseThrow(() -> new ShowNotFoundException("Show Not Found", 404));
 
         if(updatedShow.getSoldTickets() + quantity > updatedShow.getAvailableTickets()){
             throw new Exception("Ingressos insuficientes");
@@ -73,5 +77,23 @@ public class ShowService {
 
         updatedShow.setAvailableTickets(updatedShow.getSoldTickets() + quantity);
         showRepository.save(updatedShow);
+    }
+
+    public boolean isSeatAvailable(Long showId, String row, int column) throws Exception {
+        Show updatedShow = showRepository.findById(showId)
+                .orElseThrow(() -> new ShowNotFoundException("Show Not Found", 404));
+
+        Seat selectedSeat = updatedShow.getSeat()
+                .stream()
+                .filter(seat -> seat.getSeatRow().equals(row) && seat.getSeatColumn() == column)
+                .findFirst()
+                .orElseThrow(() -> new SeatNotFoundException("Seat Not Found", 404));
+
+
+        if (selectedSeat.isOccupied()) {
+            throw new Exception("Seat is already taken");
+        }
+
+        return true;
     }
 }
