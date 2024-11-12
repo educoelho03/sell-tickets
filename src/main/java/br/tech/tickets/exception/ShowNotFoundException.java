@@ -1,6 +1,6 @@
 package br.tech.tickets.exception;
 
-public class ShowNotFoundException extends RuntimeException {
+public class ShowNotFoundException extends Exception {
 
     private final int errorCode;
 
