@@ -1,11 +1,8 @@
 package br.tech.tickets.domain.entity;
 
-import br.tech.tickets.domain.dto.ArtistRequest;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -19,11 +16,9 @@ public class Show {
     @ManyToOne
     @JoinColumn(name = "artist_id", nullable = false)
     private Artist artist;
-
     private String local;
     private LocalDateTime date;
     private Integer availableTickets;
-    private Integer soldTickets;
 
     @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
@@ -32,12 +27,12 @@ public class Show {
     private List<Seat> seats;
 
 
-    public Show(Artist artist, String local, LocalDateTime date, Integer availableTickets, Integer soldTickets) {
+    public Show(Long showId, Artist artist, String local, LocalDateTime date, Integer availableTickets) {
+        this.showId = showId;
         this.artist = artist;
         this.local = local;
         this.date = date;
         this.availableTickets = availableTickets;
-        this.soldTickets = soldTickets;
     }
 
     public Show() {
@@ -81,14 +76,6 @@ public class Show {
 
     public void setAvailableTickets(Integer maxTickets) {
         this.availableTickets = maxTickets;
-    }
-
-    public Integer getSoldTickets() {
-        return soldTickets;
-    }
-
-    public void setSoldTickets(Integer soldTickets) {
-        this.soldTickets = soldTickets;
     }
 
     public List<Ticket> getTicket() {

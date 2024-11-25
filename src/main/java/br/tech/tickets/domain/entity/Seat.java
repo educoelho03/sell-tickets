@@ -1,6 +1,5 @@
 package br.tech.tickets.domain.entity;
 
-import br.tech.tickets.service.ShowService;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,17 +9,15 @@ public class Seat {
     private Long seatId;
 
     private boolean isOccupied;
-    private String seatRow;  // Linha onde o assento está (ex: "A", "B", "C")
-    private int seatColumn;  // Coluna do assento (ex: 1, 2, 3...)
+    private int seatNumber;
 
     @ManyToOne
     @JoinColumn(name = "show_id", nullable = false)
     private Show show;
 
-    public Seat(boolean isOccupied, String row, int column) {
+    public Seat(boolean isOccupied, int seatNumber) {
         this.isOccupied = isOccupied;
-        this.seatRow = row;
-        this.seatColumn = column;
+        this.seatNumber = seatNumber;
     }
 
     public Seat() {
@@ -42,19 +39,11 @@ public class Seat {
         isOccupied = occupied;
     }
 
-    public String getSeatRow() {
-        return seatRow;
+    public int getSeatNumber() {
+        return seatNumber;
     }
 
-    public void setSeatRow(String seatRow) {
-        this.seatRow = seatRow;
-    }
-
-    public int getSeatColumn() {
-        return seatColumn;
-    }
-
-    public void setSeatColumn(int seatColumn) {
-        this.seatColumn = seatColumn;
+    public void setSeatNumber(int seatNumber) {
+        this.seatNumber = seatNumber;
     }
 }

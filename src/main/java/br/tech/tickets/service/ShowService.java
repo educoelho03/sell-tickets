@@ -1,17 +1,11 @@
 package br.tech.tickets.service;
 
-import br.tech.tickets.domain.dto.ShowResponse;
+import br.tech.tickets.dto.CreateShowResponse;
 import br.tech.tickets.domain.entity.Artist;
-import br.tech.tickets.domain.entity.Seat;
 import br.tech.tickets.domain.entity.Show;
-import br.tech.tickets.domain.dto.ShowRequest;
-import br.tech.tickets.exception.SeatNotFoundException;
-import br.tech.tickets.exception.ShowNotFoundException;
-import br.tech.tickets.repository.SeatRepository;
 import br.tech.tickets.repository.ShowRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,75 +19,22 @@ public class ShowService {
         this.showRepository = showRepository;
     }
 
-    public ShowResponse registerShow(ShowRequest showRequest){
-        Show newShow = new Show();
-        newShow.setArtist(showRequest.artist());
-        newShow.setLocal(showRequest.local());
-        newShow.setDate(showRequest.date());
-        newShow.setAvailableTickets(showRequest.availableTickets());
-
-        Show savedShow = showRepository.save(newShow);
-
-        return new ShowResponse(
-                savedShow.getArtist(),
-                savedShow.getLocal(),
-                savedShow.getDate(),
-                savedShow.getAvailableTickets(),
-                savedShow.getSoldTickets()
-        );
+    public Show registerShow(Show show){
+        return showRepository.save(show);
     }
 
-    public List<ShowResponse> consultShowsByArtist(Artist artist){
-        List<Show> shows = showRepository.findByArtist(artist);
-
-        return shows.stream().map((show) -> new ShowResponse(
-                show.getArtist(),
-                show.getLocal(),
-                show.getDate(),
-                show.getAvailableTickets(),
-                show.getSoldTickets()
-        )).collect(Collectors.toList());
+    public List<Show> consultShowsByArtist(Artist artist) {
+        return showRepository.findByArtist(artist);
     }
 
-    public List<ShowResponse> consultShowsByDate(LocalDateTime date) {
+    public List<CreateShowResponse> consultShowsByDate(LocalDateTime date) {
         List<Show> shows = showRepository.findByDate(date);
 
-        return shows.stream().map((show) -> new ShowResponse(
+        return shows.stream().map((show) -> new CreateShowResponse(
                 show.getArtist(),
                 show.getLocal(),
                 show.getDate(),
-                show.getAvailableTickets(),
-                show.getSoldTickets()
+                show.getAvailableTickets()
         )).collect(Collectors.toList());
-    }
-
-    public void sellingTickets(Long showId, int quantity) throws Exception {
-        Show updatedShow = showRepository.findById(showId)
-                .orElseThrow(() -> new ShowNotFoundException("Show Not Found", 404));
-
-        if(updatedShow.getSoldTickets() + quantity > updatedShow.getAvailableTickets()){
-            throw new Exception("Ingressos insuficientes");
-        }
-
-        updatedShow.setAvailableTickets(updatedShow.getSoldTickets() + quantity);
-        showRepository.save(updatedShow);
-    }
-
-    public boolean isSeatAvailable(Long showId, String row, int column) throws Exception {
-        Show updatedShow = showRepository.findById(showId)
-                .orElseThrow(() -> new ShowNotFoundException("Show Not Found", 404));
-
-        Seat selectedSeat = updatedShow.getSeat()
-                .stream()
-                .filter(seat -> seat.getSeatRow().equals(row) && seat.getSeatColumn() == column)
-                .findFirst()
-                .orElseThrow(() -> new SeatNotFoundException("Seat Not Found", 404));
-
-
-        if (selectedSeat.isOccupied()) {
-            throw new Exception("Seat is already taken");
-        }
-
-        return true;
     }
 }

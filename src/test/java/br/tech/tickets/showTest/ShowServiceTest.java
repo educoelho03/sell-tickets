@@ -1,11 +1,9 @@
 package br.tech.tickets.showTest;
 
-import br.tech.tickets.domain.dto.ShowRequest;
-import br.tech.tickets.domain.dto.ShowResponse;
+import br.tech.tickets.dto.CreateShowRequest;
+import br.tech.tickets.dto.CreateShowResponse;
 import br.tech.tickets.domain.entity.Artist;
-import br.tech.tickets.domain.entity.Seat;
 import br.tech.tickets.domain.entity.Show;
-import br.tech.tickets.repository.SeatRepository;
 import br.tech.tickets.repository.ShowRepository;
 import br.tech.tickets.service.ShowService;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +42,7 @@ class ShowServiceTest {
     void registerShow() {
         // ARRANGE
         Artist artist = new Artist("Travis Scott", "Trap");
-        ShowRequest showRequest = new ShowRequest(
+        CreateShowRequest showRequest = new CreateShowRequest(
                 1L,
                 artist,
                 "São Paulo",
@@ -63,15 +61,15 @@ class ShowServiceTest {
         when(showRepositoryMock.save(any(Show.class))).thenReturn(savedShow);
 
         // ACT
-        ShowResponse showResponse = showService.registerShow(showRequest);
+        CreateShowResponse createShowResponse = showService.registerShow(showRequest);
 
         // ASSERTIONS
-        assertNotNull(showResponse);
-        assertEquals(showRequest.artist().getName(), showResponse.artist().getName());
-        assertEquals(showRequest.local(), showResponse.local());
-        assertEquals(showRequest.date(), showResponse.date());
-        assertEquals(showRequest.availableTickets(), showResponse.availableTickets());
-        assertEquals(showRequest.soldTickets(), showResponse.soldTickets());
+        assertNotNull(createShowResponse);
+        assertEquals(showRequest.artist().getName(), createShowResponse.artist().getName());
+        assertEquals(showRequest.local(), createShowResponse.local());
+        assertEquals(showRequest.date(), createShowResponse.date());
+        assertEquals(showRequest.availableTickets(), createShowResponse.availableTickets());
+        assertEquals(showRequest.soldTickets(), createShowResponse.soldTickets());
 
         verify(showRepositoryMock).save(any(Show.class)); // Não é necessário passar `any()` dentro do verify.
     }
@@ -90,12 +88,12 @@ class ShowServiceTest {
 
         when(showRepositoryMock.findByArtist(artist)).thenReturn(List.of(show1, show2));
 
-        List<ShowResponse> showResponse = showService.consultShowsByArtist(artist);
+        List<CreateShowResponse> createShowResponse = showService.consultShowsByArtist(artist);
 
-        assertNotNull(showResponse);
-        assertEquals(2, showResponse.size());
-        assertEquals(artist.getName(), showResponse.get(0).artist().getName());
-        assertEquals(artist.getName(), showResponse.get(1).artist().getName());
+        assertNotNull(createShowResponse);
+        assertEquals(2, createShowResponse.size());
+        assertEquals(artist.getName(), createShowResponse.get(0).artist().getName());
+        assertEquals(artist.getName(), createShowResponse.get(1).artist().getName());
     }
 
     @Test
@@ -115,20 +113,20 @@ class ShowServiceTest {
 
         when(showRepositoryMock.findByDate(date)).thenReturn(List.of(show1, show2));
 
-        List<ShowResponse> showResponseList = showService.consultShowsByDate(date);
+        List<CreateShowResponse> createShowResponseList = showService.consultShowsByDate(date);
 
-        assertNotNull(showResponseList);
-        assertEquals(2, showResponseList.size());
+        assertNotNull(createShowResponseList);
+        assertEquals(2, createShowResponseList.size());
 
-        assertEquals(show1.getDate(), showResponseList.get(0).date());
-        assertEquals(show2.getDate(), showResponseList.get(1).date());
+        assertEquals(show1.getDate(), createShowResponseList.get(0).date());
+        assertEquals(show2.getDate(), createShowResponseList.get(1).date());
 
-        assertEquals(show1.getDate().getDayOfMonth(), showResponseList.get(0).date().getDayOfMonth());
-        assertEquals(show1.getDate().getMonth(), showResponseList.get(0).date().getMonth());
-        assertEquals(show1.getDate().getYear(), showResponseList.get(0).date().getYear());
+        assertEquals(show1.getDate().getDayOfMonth(), createShowResponseList.get(0).date().getDayOfMonth());
+        assertEquals(show1.getDate().getMonth(), createShowResponseList.get(0).date().getMonth());
+        assertEquals(show1.getDate().getYear(), createShowResponseList.get(0).date().getYear());
 
-        assertEquals(show2.getDate().getDayOfMonth(), showResponseList.get(1).date().getDayOfMonth());
-        assertEquals(show2.getDate().getMonth(), showResponseList.get(1).date().getMonth());
-        assertEquals(show2.getDate().getYear(), showResponseList.get(1).date().getYear());
+        assertEquals(show2.getDate().getDayOfMonth(), createShowResponseList.get(1).date().getDayOfMonth());
+        assertEquals(show2.getDate().getMonth(), createShowResponseList.get(1).date().getMonth());
+        assertEquals(show2.getDate().getYear(), createShowResponseList.get(1).date().getYear());
     }
 }

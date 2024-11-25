@@ -13,5 +13,5 @@ public class Customer {
     private String email;
 
     @OneToMany(mappedBy = "customer")
-    private List<Sales> vendas;
+    private List<Sales> sales;
 }

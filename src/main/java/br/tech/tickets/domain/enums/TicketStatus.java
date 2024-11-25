@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum TicketStatus {
-    AVAILABLE("available"), SOLD_OUT("sold_out");
+    AVAILABLE("available"), SOLD("sold");
 
     private final String TicketStatus;
 

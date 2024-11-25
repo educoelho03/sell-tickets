@@ -10,14 +10,15 @@ public class Artist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long artist_id;
+    private Long artistId;
     private String name;
     private String musicalType;
 
     @OneToMany(mappedBy = "artist")
     private List<Show> shows;
 
-    public Artist(String name, String musicalType) {
+    public Artist(Long artistId, String name, String musicalType) {
+        this.artistId = artistId;
         this.name = name;
         this.musicalType = musicalType;
     }
@@ -25,12 +26,12 @@ public class Artist {
     public Artist() {
     }
 
-    public Long getId() {
-        return artist_id;
+    public Long getArtistId() {
+        return artistId;
     }
 
-    public void setId(Long id) {
-        this.artist_id = id;
+    public void setArtistId(Long artistId) {
+        this.artistId = artistId;
     }
 
     public String getName() {
