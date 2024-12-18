@@ -42,7 +42,7 @@ public class ShowController {
         return ResponseEntity.status(HttpStatus.OK).body(createShowRespons);
     }
 
-    @PostMapping("/{id}/sell")
+    @PostMapping("/{showId}/sell")
     public ResponseEntity<ApiResponse> sellTicket(@PathVariable Long showId, @RequestParam int ticketQuantity, @RequestParam int seatNumber){
         sellService.sellingTickets(showId, ticketQuantity, seatNumber);
         return ResponseEntity.ok(new ApiResponse("Venda realiada com sucesso", null));
