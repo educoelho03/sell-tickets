@@ -1,24 +1,22 @@
 package br.tech.tickets.dto;
 
 import br.tech.tickets.domain.entity.Artist;
-import br.tech.tickets.domain.entity.Show;
 
 import java.time.LocalDateTime;
 
 public class ShowDTO {
 
-    private Long artistId;
+    private ArtistDTO artist;
     private String local;
     private LocalDateTime date;
     private Integer availableTickets;
 
-    // Getters e Setters
-    public Long getArtistId() {
-        return artistId;
+    public ArtistDTO getArtist() {
+        return artist;
     }
 
-    public void setArtistId(Long artistId) {
-        this.artistId = artistId;
+    public void setArtist(ArtistDTO artist) {
+        this.artist = artist;
     }
 
     public String getLocal() {
@@ -43,20 +41,5 @@ public class ShowDTO {
 
     public void setAvailableTickets(Integer availableTickets) {
         this.availableTickets = availableTickets;
-    }
-
-    // method para converter ShowDTO em Show (para persistência)
-    public Show toEntity(Artist artist) {
-        return new Show(artist, local, date, availableTickets);
-    }
-
-    // method estático para converter Show em ShowDTO (para resposta)
-    public static ShowDTO toDto(Show show) {
-        ShowDTO dto = new ShowDTO();
-        dto.setArtistId(show.getArtist().getArtistId());  // Supondo que Show tem um campo `artist`
-        dto.setLocal(show.getLocal());
-        dto.setDate(show.getDate());
-        dto.setAvailableTickets(show.getAvailableTickets());
-        return dto;
     }
 }

@@ -1,12 +1,14 @@
 package br.tech.tickets.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "tb_show")
+@Accessors(chain = true)
 public class Show {
 
     @Id

@@ -5,6 +5,7 @@ import br.tech.tickets.domain.entity.Show;
 import br.tech.tickets.dto.ApiResponse;
 import br.tech.tickets.dto.ShowDTO;
 import br.tech.tickets.dto.ShowResponseDTO;
+import br.tech.tickets.mapper.ShowMapper;
 import br.tech.tickets.service.SellService;
 import br.tech.tickets.service.ShowService;
 import jakarta.validation.Valid;
@@ -28,10 +29,11 @@ public class ShowController {
     }
 
     @GetMapping("/create")
-    public ResponseEntity<ShowDTO> createShow(@Valid @RequestBody Show show) {
-        Show savedShow = showService.createShow(show);
-        ShowDTO responseDto = ShowDTO.toDto(savedShow); // Converte a entidade para o DTO
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+    public ResponseEntity<ShowDTO> createShow(@Valid @RequestBody ShowDTO request) {
+        Show show = ShowMapper.toEntity(request);
+        show = showService.createShow(show);
+        ShowDTO response = ShowMapper.toDto(show); // Converte a entidade para o DTO
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 
