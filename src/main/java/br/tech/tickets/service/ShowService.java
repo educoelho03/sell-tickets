@@ -1,8 +1,9 @@
 package br.tech.tickets.service;
 
-import br.tech.tickets.dto.CreateShowResponse;
 import br.tech.tickets.domain.entity.Artist;
 import br.tech.tickets.domain.entity.Show;
+import br.tech.tickets.dto.ShowDTO;
+import br.tech.tickets.dto.ShowResponseDTO;
 import br.tech.tickets.repository.ShowRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,22 +20,33 @@ public class ShowService {
         this.showRepository = showRepository;
     }
 
-    public Show registerShow(Show show){
-        return showRepository.save(show);
+    public Show createShow(ShowDTO showDTO) {
+        if(showDTO == null){
+            throw new IllegalArgumentException("The show cannot be null");
+        }
+
+        return showRepository.save(showDTO.toEntity(new Artist()));
     }
 
-    public List<Show> consultShowsByArtist(Artist artist) {
-        return showRepository.findByArtist(artist);
+    public List<ShowResponseDTO> consultShowsByArtist(Artist artist) {
+        if(artist == null){
+            throw new IllegalArgumentException("The artist cannot be null");
+        }
+
+        List<Show> shows = showRepository.findByArtist(artist);
+        return shows.stream()
+                .map(ShowResponseDTO::toDto)
+                .collect(Collectors.toList());
     }
 
-    public List<CreateShowResponse> consultShowsByDate(LocalDateTime date) {
+    public List<ShowResponseDTO> consultShowsByDate(LocalDateTime date) {
+        if(date == null){
+            throw new IllegalArgumentException("The date cannot be null");
+        }
+
         List<Show> shows = showRepository.findByDate(date);
-
-        return shows.stream().map((show) -> new CreateShowResponse(
-                show.getArtist(),
-                show.getLocal(),
-                show.getDate(),
-                show.getAvailableTickets()
-        )).collect(Collectors.toList());
+        return shows.stream()
+                .map(ShowResponseDTO::toDto)
+                .collect(Collectors.toList());
     }
 }

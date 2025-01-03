@@ -38,6 +38,9 @@ public class Show {
     public Show() {
     }
 
+    public Show(Artist artist, String local, LocalDateTime date, Integer availableTickets) {
+    }
+
     public Long getShowId() {
         return showId;
     }

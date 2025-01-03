@@ -21,6 +21,7 @@ public class ShowResponseDTO {
         this.availableTickets = availableTickets;
     }
 
+
     public static ShowResponseDTO toDto(Show show) {
         return new ShowResponseDTO(
                 show.getArtist(),

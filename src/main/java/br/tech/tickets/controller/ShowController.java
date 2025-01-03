@@ -1,11 +1,10 @@
 package br.tech.tickets.controller;
 
+import br.tech.tickets.domain.entity.Artist;
 import br.tech.tickets.domain.entity.Show;
 import br.tech.tickets.dto.ApiResponse;
-import br.tech.tickets.dto.CreateShowResponse;
 import br.tech.tickets.dto.ShowDTO;
 import br.tech.tickets.dto.ShowResponseDTO;
-import br.tech.tickets.exception.TicketSaleException;
 import br.tech.tickets.service.SellService;
 import br.tech.tickets.service.ShowService;
 import jakarta.validation.Valid;
@@ -17,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/show")
+@RequestMapping("/api/show")
 public class ShowController {
 
     private final ShowService showService;
@@ -28,17 +27,18 @@ public class ShowController {
         this.sellService = sellService;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<ShowResponseDTO> createShow(@Valid @RequestBody ShowDTO showDto) {
-        Show show = showService.registerShow(showDto.toObject());
-        return new ResponseEntity<>(ShowResponseDTO.toDto(show), HttpStatus.CREATED);
+    @GetMapping("/create")
+    public ResponseEntity<ShowDTO> createShow(@Valid @RequestBody ShowDTO showDTO) {
+        Show savedShow = showService.createShow(showDTO);
+        ShowDTO responseDto = ShowDTO.toDto(savedShow); // Converte a entidade para o DTO
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
 
     @GetMapping("/consult/{date}")
-    public ResponseEntity<List<CreateShowResponse>> getShowsByDate(@PathVariable String date){
+    public ResponseEntity<List<ShowResponseDTO>> getShowsByDate(@PathVariable String date){
         LocalDateTime parseData = LocalDateTime.parse(date);
-        List<CreateShowResponse> createShowRespons = showService.consultShowsByDate(parseData);
+        List<ShowResponseDTO> createShowRespons = showService.consultShowsByDate(parseData);
         return ResponseEntity.status(HttpStatus.OK).body(createShowRespons);
     }
 
