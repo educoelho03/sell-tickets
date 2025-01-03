@@ -28,8 +28,8 @@ public class ShowController {
     }
 
     @GetMapping("/create")
-    public ResponseEntity<ShowDTO> createShow(@Valid @RequestBody ShowDTO showDTO) {
-        Show savedShow = showService.createShow(showDTO);
+    public ResponseEntity<ShowDTO> createShow(@Valid @RequestBody Show show) {
+        Show savedShow = showService.createShow(show);
         ShowDTO responseDto = ShowDTO.toDto(savedShow); // Converte a entidade para o DTO
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
