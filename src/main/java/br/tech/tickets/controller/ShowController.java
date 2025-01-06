@@ -26,7 +26,7 @@ public class ShowController {
         this.sellService = sellService;
     }
 
-    @GetMapping("/create")
+    @GetMapping("/register")
     public ResponseEntity<ShowDTO> createShow(@Valid @RequestBody ShowDTO request) {
         Show show = ShowMapper.toEntity(request);
         showService.createShow(show);
