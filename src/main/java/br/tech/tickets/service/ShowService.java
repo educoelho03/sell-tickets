@@ -3,7 +3,7 @@ package br.tech.tickets.service;
 import br.tech.tickets.domain.entity.Artist;
 import br.tech.tickets.domain.entity.Show;
 import br.tech.tickets.dto.ShowDTO;
-import br.tech.tickets.dto.ShowResponseDTO;
+import br.tech.tickets.mapper.ShowMapper;
 import br.tech.tickets.repository.ShowRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,33 +20,33 @@ public class ShowService {
         this.showRepository = showRepository;
     }
 
-    public Show createShow(Show show) {
+    public void createShow(Show show) {
         if(show == null){
             throw new IllegalArgumentException("The show cannot be null");
         }
 
-        return showRepository.save(show);
+        showRepository.save(show);
     }
 
-    public List<ShowResponseDTO> consultShowsByArtist(Artist artist) {
+    public List<ShowDTO> consultShowsByArtist(Artist artist) {
         if(artist == null){
             throw new IllegalArgumentException("The artist cannot be null");
         }
 
         List<Show> shows = showRepository.findByArtist(artist);
         return shows.stream()
-                .map(ShowResponseDTO::toDto)
+                .map(ShowMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public List<ShowResponseDTO> consultShowsByDate(LocalDateTime date) {
+    public List<ShowDTO> consultShowsByDate(LocalDateTime date) {
         if(date == null){
             throw new IllegalArgumentException("The date cannot be null");
         }
 
         List<Show> shows = showRepository.findByDate(date);
         return shows.stream()
-                .map(ShowResponseDTO::toDto)
+                .map(ShowMapper::toDto)
                 .collect(Collectors.toList());
     }
 }

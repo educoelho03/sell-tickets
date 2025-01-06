@@ -1,9 +1,9 @@
 package br.tech.tickets.repository;
 
-import br.tech.tickets.domain.entity.Customer;
+import br.tech.tickets.domain.entity.PurchasedTicket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface PurchasedTicketRepository extends JpaRepository<PurchasedTicket, Long> {
 }

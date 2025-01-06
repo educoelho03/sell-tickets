@@ -1,20 +1,19 @@
 package br.tech.tickets.domain.entity;
 
-import ch.qos.logback.core.net.server.Client;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class Sales {
+public class PurchasedTicket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long salesId;
 
     @ManyToOne
-    @JoinColumn(name = "customerId")
-    private Customer customer;
+    @JoinColumn(name = "userId")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "ticketId")

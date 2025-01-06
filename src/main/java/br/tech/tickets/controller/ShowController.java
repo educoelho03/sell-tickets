@@ -1,10 +1,8 @@
 package br.tech.tickets.controller;
 
-import br.tech.tickets.domain.entity.Artist;
 import br.tech.tickets.domain.entity.Show;
 import br.tech.tickets.dto.ApiResponse;
 import br.tech.tickets.dto.ShowDTO;
-import br.tech.tickets.dto.ShowResponseDTO;
 import br.tech.tickets.mapper.ShowMapper;
 import br.tech.tickets.service.SellService;
 import br.tech.tickets.service.ShowService;
@@ -31,23 +29,23 @@ public class ShowController {
     @GetMapping("/create")
     public ResponseEntity<ShowDTO> createShow(@Valid @RequestBody ShowDTO request) {
         Show show = ShowMapper.toEntity(request);
-        show = showService.createShow(show);
+        showService.createShow(show);
         ShowDTO response = ShowMapper.toDto(show); // Converte a entidade para o DTO
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(201).body(response);
     }
 
 
     @GetMapping("/consult/{date}")
-    public ResponseEntity<List<ShowResponseDTO>> getShowsByDate(@PathVariable String date){
+    public ResponseEntity<List<ShowDTO>> getShowsByDate(@PathVariable String date){
         LocalDateTime parseData = LocalDateTime.parse(date);
-        List<ShowResponseDTO> createShowRespons = showService.consultShowsByDate(parseData);
-        return ResponseEntity.status(HttpStatus.OK).body(createShowRespons);
+        List<ShowDTO> createShowRespons = showService.consultShowsByDate(parseData);
+        return ResponseEntity.status(200).body(createShowRespons);
     }
 
     @PostMapping("/{showId}/sell")
     public ResponseEntity<ApiResponse> sellTicket(@PathVariable Long showId, @RequestParam int ticketQuantity, @RequestParam int seatNumber){
         sellService.sellingTickets(showId, ticketQuantity, seatNumber);
-        return ResponseEntity.ok(new ApiResponse("Venda realiada com sucesso", null));
+        return ResponseEntity.ok(new ApiResponse("Venda realizada com sucesso", null));
     }
 
 }
