@@ -20,12 +20,12 @@ public class ShowService {
         this.showRepository = showRepository;
     }
 
-    public void createShow(Show show) {
+    public Show createShow(Show show) {
         if(show == null){
             throw new IllegalArgumentException("The show cannot be null");
         }
 
-        showRepository.save(show);
+        return showRepository.save(show);
     }
 
     public List<ShowDTO> consultShowsByArtist(Artist artist) {
