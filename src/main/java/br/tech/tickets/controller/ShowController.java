@@ -27,8 +27,8 @@ public class ShowController {
     }
 
     @GetMapping("/register")
-    public ResponseEntity<ShowDTO> createShow(@Valid @RequestBody ShowDTO request) {
-        Show show = ShowMapper.toEntity(request);
+    public ResponseEntity<ShowDTO> createShow(@Valid @RequestBody ShowDTO showDto) {
+        Show show = ShowMapper.toEntity(showDto);
         showService.createShow(show);
         ShowDTO response = ShowMapper.toDto(show); // Converte a entidade para o DTO
         return ResponseEntity.status(201).body(response);
