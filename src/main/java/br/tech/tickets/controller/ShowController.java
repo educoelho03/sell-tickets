@@ -7,7 +7,6 @@ import br.tech.tickets.mapper.ShowMapper;
 import br.tech.tickets.service.SellService;
 import br.tech.tickets.service.ShowService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

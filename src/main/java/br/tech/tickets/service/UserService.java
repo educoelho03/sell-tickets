@@ -5,7 +5,7 @@ import br.tech.tickets.dto.UserDTO;
 import br.tech.tickets.exception.EmailExistsException;
 import br.tech.tickets.exception.SamePasswordException;
 import br.tech.tickets.repository.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
+// import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -15,11 +15,13 @@ import java.util.Map;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    // private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository
+                       //PasswordEncoder passwordEncoder
+                       ) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+        // this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -32,7 +34,7 @@ public class UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         user.setEmail(userDto.getEmail());
         user.setCpf(userDto.getCpf());
@@ -42,13 +44,13 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void changePassword(User user, String newPassword) {
-        if(passwordEncoder.matches(newPassword, user.getPassword())) {
-            throw new SamePasswordException("Passwords must be different.");
-        }
-
-        user.setPassword(passwordEncoder.encode(newPassword));
-    }
+    //public void changePassword(User user, String newPassword) {
+    //    if(passwordEncoder.matches(newPassword, user.getPassword())) {
+    //        throw new SamePasswordException("Passwords must be different.");
+    //    }
+//
+    //    user.setPassword(passwordEncoder.encode(newPassword));
+    //}
 
     public void validateFields(User user) {
         Map<String, String> fieldsToValidate = new HashMap<>();
