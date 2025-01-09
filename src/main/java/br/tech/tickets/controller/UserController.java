@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+    private final EmailService emailService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, EmailService emailService) {
         this.userService = userService;
+        this.emailService = emailService;
     }
 
     @PostMapping("/register")
@@ -27,6 +29,12 @@ public class UserController {
         User user = UserMapper.toEntity(userDTO);
         UserDTO createdUserDTO = UserMapper.toDto(user);
         userService.registerNewUser(userDTO);
+
+        Email email = new Email();
+        email.setRecipient(userDTO.getEmail());
+        email.setSubject("User created");
+        email.setBody("Dear " + userDTO.getFirstName() + " " + userDTO.getLastName() + "\n\n Your user has been registered successfully.");
+        emailService.sendEmail(email);
         return ResponseEntity.status(201).body(createdUserDTO);
     }
 }

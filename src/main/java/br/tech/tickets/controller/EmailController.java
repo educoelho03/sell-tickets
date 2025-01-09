@@ -21,8 +21,8 @@ public class EmailController {
     @PostMapping("/sendEmail")
     public ResponseEntity<String> sendEmail(@RequestBody Email email) {
         try{
-            String result = emailService.sendEmail(email);
-            return ResponseEntity.ok(result);
+            emailService.sendEmail(email);
+            return ResponseEntity.status(200).body("Email sent");
         } catch (Exception ex){
             return ResponseEntity.badRequest().body("Error while sending email");
         }
@@ -31,8 +31,8 @@ public class EmailController {
     @PostMapping("/sendEmailWithAttachment")
     public ResponseEntity<String> sendEmailWithAttachment(@RequestBody Email email) {
         try {
-            String result = emailService.sendEmailWithAttachment(email);
-            return ResponseEntity.ok(result);
+            emailService.sendEmailWithAttachment(email);
+            return ResponseEntity.status(200).body("Email sent.");
         } catch (Exception ex){
             return ResponseEntity.badRequest().body("Error while sending email");
         }

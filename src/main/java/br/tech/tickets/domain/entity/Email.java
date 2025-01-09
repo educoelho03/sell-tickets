@@ -1,5 +1,8 @@
 package br.tech.tickets.domain.entity;
 
+import lombok.NoArgsConstructor;
+
+
 public class Email {
 
     private String recipient;
@@ -12,6 +15,9 @@ public class Email {
         this.subject = subject;
         this.body = body;
         this.attachment = attachment;
+    }
+
+    public Email() {
     }
 
     public String getRecipient() {

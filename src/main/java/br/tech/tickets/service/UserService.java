@@ -58,7 +58,7 @@ public class UserService {
         fieldsToValidate.put("lastName", user.getLastName());
         fieldsToValidate.put("cpf", user.getCpf());
         fieldsToValidate.put("email", user.getEmail());
-        fieldsToValidate.put("password", user.getPassword());
+        //fieldsToValidate.put("password", user.getPassword());
 
         for(Map.Entry<String, String> field : fieldsToValidate.entrySet()){
             if(field.getValue() == null){

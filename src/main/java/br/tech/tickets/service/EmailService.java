@@ -25,7 +25,7 @@ public class EmailService {
     }
 
 
-    public String sendEmail(Email email){
+    public void sendEmail(Email email){
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setFrom(sender);
@@ -33,11 +33,9 @@ public class EmailService {
         message.setSubject(email.getSubject());
         message.setText(email.getBody());
         mailSender.send(message);
-
-        return "Mail Sent Successfully...";
     }
 
-    public String sendEmailWithAttachment(Email email) throws MessagingException {
+    public void sendEmailWithAttachment(Email email) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper;
 
@@ -51,7 +49,6 @@ public class EmailService {
         helper.addAttachment(file.getFilename(), file);
 
         mailSender.send(mimeMessage);
-        return "Mail Sent Successfully...";
     }
 
 }
