@@ -3,9 +3,11 @@ package br.tech.tickets.controller;
 import br.tech.tickets.dto.ApiResponse;
 import br.tech.tickets.service.PasswordResetService;
 import jakarta.mail.MessagingException;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
@@ -25,6 +27,7 @@ public class PasswordResetController {
         return ResponseEntity.ok(new ApiResponse("Solicitação de alteração de senha enviada com sucesso", null));
     }
 
+    @PostMapping("/reset")
     public ResponseEntity<ApiResponse> resetPassword(@RequestParam("token") String token, Map<String, String> emailAndNewPassoword) {
         try {
             String email = emailAndNewPassoword.get("email");
