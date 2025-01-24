@@ -51,4 +51,18 @@ public class EmailService {
         mailSender.send(mimeMessage);
     }
 
+    public void sendPasswordResetEmail(String recepient, String token) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();         // Cria uma nova mensagem de e-mail.
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setFrom(sender);
+        helper.setTo(recepient);
+        helper.setSubject("Redefinição de senha");
+
+        String text = "CORPO DO EMAIL DE REDEFINIÇAO DE SENHA";
+
+        helper.setText(text);
+        mailSender.send(message);
+
+    }
+
 }
