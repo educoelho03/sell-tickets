@@ -6,6 +6,7 @@ import br.tech.tickets.repository.PasswordResetTokenRepository;
 import br.tech.tickets.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -21,7 +22,6 @@ public class PasswordResetService {
         this.tokenRepository = passwordResetTokenRepository;
         this.emailService = emailService;
     }
-
 
     public void createTokenResetPassword(User user, String token) {
         PasswordResetToken resetToken = new PasswordResetToken();
@@ -45,6 +45,7 @@ public class PasswordResetService {
         emailService.sendPasswordResetEmail(user.getEmail(), token);
     }
 
+    @Transactional
     public void changePassword(String token, String newPassword, String emailRequest) throws MessagingException {
         PasswordResetToken resetToken = tokenRepository.findByToken(token);
         if(resetToken == null) {
