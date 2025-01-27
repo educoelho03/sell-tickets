@@ -1,7 +1,7 @@
 package br.tech.tickets.service;
 
 import br.tech.tickets.domain.entity.User;
-import br.tech.tickets.dto.UserDTO;
+import br.tech.tickets.controller.dto.UserDTO;
 import br.tech.tickets.exception.EmailExistsException;
 import br.tech.tickets.exception.SamePasswordException;
 import br.tech.tickets.repository.UserRepository;

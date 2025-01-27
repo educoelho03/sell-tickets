@@ -1,6 +1,4 @@
-package br.tech.tickets.dto;
-
-import br.tech.tickets.domain.entity.Artist;
+package br.tech.tickets.controller.dto;
 
 import java.time.LocalDateTime;
 

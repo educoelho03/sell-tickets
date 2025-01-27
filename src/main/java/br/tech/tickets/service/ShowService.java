@@ -2,7 +2,7 @@ package br.tech.tickets.service;
 
 import br.tech.tickets.domain.entity.Artist;
 import br.tech.tickets.domain.entity.Show;
-import br.tech.tickets.dto.ShowDTO;
+import br.tech.tickets.controller.dto.ShowDTO;
 import br.tech.tickets.mapper.ShowMapper;
 import br.tech.tickets.repository.ShowRepository;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package br.tech.tickets.mapper;
 
 import br.tech.tickets.domain.entity.Show;
-import br.tech.tickets.dto.ShowDTO;
+import br.tech.tickets.controller.dto.ShowDTO;
 
 public class ShowMapper {
 

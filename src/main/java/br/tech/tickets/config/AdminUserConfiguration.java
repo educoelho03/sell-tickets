@@ -1,18 +1,15 @@
 package br.tech.tickets.config;
 
 import br.tech.tickets.domain.entity.Role;
-
 import br.tech.tickets.domain.entity.User;
 import br.tech.tickets.repository.RoleRepository;
 import br.tech.tickets.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
-import java.util.Set;
 
 @Configuration
 public class AdminUserConfiguration implements CommandLineRunner {
@@ -41,7 +38,7 @@ public class AdminUserConfiguration implements CommandLineRunner {
                 },
                 () -> {
                     var user = new User();
-                    user.setUserName("admin");
+                    user.setUsername("admin");
                     user.setPassword(passwordEncoder.encode("123"));
                     user.setRoles(List.of(roleAdmin));
                     userRepository.save(user);

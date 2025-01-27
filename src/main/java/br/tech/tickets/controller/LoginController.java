@@ -1,9 +1,8 @@
 package br.tech.tickets.controller;
 
-import br.tech.tickets.dto.LoginRequest;
-import br.tech.tickets.dto.LoginResponse;
+import br.tech.tickets.controller.dto.LoginRequest;
+import br.tech.tickets.controller.dto.LoginResponse;
 import br.tech.tickets.repository.UserRepository;
-import com.nimbusds.jwt.JWTClaimsSet;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,11 +11,9 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
-import java.time.OffsetDateTime;
 
 @RestController
 public class LoginController {

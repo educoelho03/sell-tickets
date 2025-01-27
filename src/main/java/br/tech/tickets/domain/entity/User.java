@@ -1,6 +1,6 @@
 package br.tech.tickets.domain.entity;
 
-import br.tech.tickets.dto.LoginRequest;
+import br.tech.tickets.controller.dto.LoginRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package br.tech.tickets.controller;
 
-import br.tech.tickets.dto.ApiResponse;
+import br.tech.tickets.controller.dto.ApiResponse;
 import br.tech.tickets.service.PasswordResetService;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package br.tech.tickets.dto;
+package br.tech.tickets.controller.dto;
 
 public class UserDTO {
 

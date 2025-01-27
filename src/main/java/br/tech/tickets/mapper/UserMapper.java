@@ -1,7 +1,7 @@
 package br.tech.tickets.mapper;
 
 import br.tech.tickets.domain.entity.User;
-import br.tech.tickets.dto.UserDTO;
+import br.tech.tickets.controller.dto.UserDTO;
 
 public class UserMapper {
     public static User toEntity(UserDTO dto) {
