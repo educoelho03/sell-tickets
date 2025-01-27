@@ -25,7 +25,7 @@ public class ShowController {
         this.sellService = sellService;
     }
 
-    @GetMapping("/register")
+    @PostMapping
     public ResponseEntity<ShowDTO> createShow(@Valid @RequestBody ShowDTO showDto) {
         Show show = ShowMapper.toEntity(showDto);
         showService.createShow(show);
@@ -34,7 +34,7 @@ public class ShowController {
     }
 
 
-    @GetMapping("/consult/{date}")
+    @GetMapping("/{date}")
     public ResponseEntity<List<ShowDTO>> getShowsByDate(@PathVariable String date){
         LocalDateTime parseData = LocalDateTime.parse(date);
         List<ShowDTO> createShowRespons = showService.consultShowsByDate(parseData);

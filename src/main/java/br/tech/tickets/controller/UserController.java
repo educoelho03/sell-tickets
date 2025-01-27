@@ -24,7 +24,7 @@ public class UserController {
         this.emailService = emailService;
     }
 
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
         User user = UserMapper.toEntity(userDTO);
         UserDTO createdUserDTO = UserMapper.toDto(user);
@@ -35,6 +35,7 @@ public class UserController {
         email.setSubject("User created");
         email.setBody("Dear " + userDTO.getFirstName() + " " + userDTO.getLastName() + "\n\n Your user has been registered successfully.");
         emailService.sendEmail(email);
+
         return ResponseEntity.status(201).body(createdUserDTO);
     }
 }

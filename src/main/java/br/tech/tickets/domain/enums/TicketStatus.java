@@ -1,6 +1,5 @@
 package br.tech.tickets.domain.enums;
 
-import br.tech.tickets.domain.entity.Ticket;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
