@@ -6,8 +6,7 @@ import br.tech.tickets.dto.UserDTO;
 public class UserMapper {
     public static User toEntity(UserDTO dto) {
         User user = new User();
-        user.setFirstName(dto.getFirstName());
-        user.setLastName(dto.getLastName());
+        user.setUsername(dto.getUsername());
         user.setEmail(dto.getEmail());
         user.setPhone(dto.getPhone());
 
@@ -16,8 +15,7 @@ public class UserMapper {
 
     public static UserDTO toDto(User user) {
         UserDTO dto = new UserDTO();
-        dto.setFirstName(user.getFirstName());
-        dto.setLastName(user.getLastName());
+        dto.setUsername(user.getUsername());
         dto.setCpf(user.getCpf());
         dto.setEmail(user.getEmail());
         dto.setPhone(user.getPhone());

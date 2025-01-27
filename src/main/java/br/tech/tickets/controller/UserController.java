@@ -33,7 +33,7 @@ public class UserController {
         Email email = new Email();
         email.setRecipient(userDTO.getEmail());
         email.setSubject("User created");
-        email.setBody("Dear " + userDTO.getFirstName() + " " + userDTO.getLastName() + "\n\n Your user has been registered successfully.");
+        email.setBody("Dear " + userDTO.getUsername() + "\n\n Your user has been registered successfully.");
         emailService.sendEmail(email);
 
         return ResponseEntity.status(201).body(createdUserDTO);

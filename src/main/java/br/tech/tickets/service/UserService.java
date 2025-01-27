@@ -28,9 +28,7 @@ public class UserService {
         }
 
         User user = new User();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-
+        user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         user.setEmail(userDto.getEmail());
@@ -51,8 +49,7 @@ public class UserService {
 
     public void validateFields(User user) {
         Map<String, String> fieldsToValidate = new HashMap<>();
-        fieldsToValidate.put("firstName", user.getFirstName());
-        fieldsToValidate.put("lastName", user.getLastName());
+        fieldsToValidate.put("firstName", user.getUsername());
         fieldsToValidate.put("cpf", user.getCpf());
         fieldsToValidate.put("email", user.getEmail());
         fieldsToValidate.put("password", user.getPassword());
