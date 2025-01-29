@@ -17,6 +17,10 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
     List<Show> findByArtist(Artist artist);
     List<Show> findByDate(LocalDateTime date);
 
-    @Query("SELECT s FROM Show s JOIN Ticket t ON t.show = s JOIN PurchasedTicket pt ON pt.ticket = t WHERE pt.user.username = :username")
+    @Query("SELECT s FROM Show s " +
+            "JOIN s.tickets t " +
+            "JOIN PurchasedTicket pt ON pt.ticket = t " +
+            "JOIN pt.user u " +
+            "WHERE u.username = :username")
     List<Show> findShowsBoughtByUsername(@Param("username") String username);
 }

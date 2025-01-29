@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "tb_show")
+@Table(name = "tb_shows")
 @Accessors(chain = true)
 public class Show {
 

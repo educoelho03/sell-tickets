@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "tb_purchasedTickets")
 public class PurchasedTicket {
 
     @Id
@@ -12,11 +13,11 @@ public class PurchasedTicket {
     private Long salesId;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "ticketId")
+    @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 
     private LocalDateTime sellDate;
