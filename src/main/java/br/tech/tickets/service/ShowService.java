@@ -20,7 +20,7 @@ public class ShowService {
         this.showRepository = showRepository;
     }
 
-    public void createShow(Show show) {
+    public void registerShow(Show show) {
         if(show == null){
             throw new IllegalArgumentException("The show cannot be null");
         }

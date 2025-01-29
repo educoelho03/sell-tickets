@@ -30,9 +30,9 @@ public class ShowController {
     }
 
     @PostMapping
-    public ResponseEntity<ShowDTO> createShow(@Valid @RequestBody ShowDTO showDto) {
+    public ResponseEntity<ShowDTO> registerNewShow(@Valid @RequestBody ShowDTO showDto) {
         Show show = ShowMapper.toEntity(showDto);
-        showService.createShow(show);
+        showService.registerShow(show);
         ShowDTO response = ShowMapper.toDto(show); // Converte a entidade para o DTO
         return ResponseEntity.status(201).body(response);
     }

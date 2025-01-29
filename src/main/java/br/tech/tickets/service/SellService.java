@@ -7,6 +7,7 @@ import br.tech.tickets.domain.enums.TicketStatus;
 import br.tech.tickets.exception.*;
 import br.tech.tickets.repository.ShowRepository;
 import br.tech.tickets.repository.TicketRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,8 +24,9 @@ public class SellService {
         this.showRepository = showRepository;
     }
 
+    @Transactional
     public void sellingTickets(Long showId, int ticketQuantity, int seatNumber){
-        Show show = findShowById(showId);
+        Show show = showRepository.findById(showId).orElseThrow(() -> new ShowNotFoundException("Show not found"));
 
         validateTicketAvailable(show, ticketQuantity);
         validateSeatAvailable(show, seatNumber);
@@ -46,10 +48,6 @@ public class SellService {
         }
 
         ticketRepository.saveAll(tickets);
-    }
-
-    private Show findShowById(Long showId){
-        return showRepository.findById(showId).orElseThrow(() -> new ShowNotFoundException("Show Not Found"));
     }
 
     private void validateTicketAvailable(Show show, int ticketQuantity){
