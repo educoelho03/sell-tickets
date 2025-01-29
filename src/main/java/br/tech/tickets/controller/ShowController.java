@@ -1,12 +1,16 @@
 package br.tech.tickets.controller;
 
+import br.tech.tickets.controller.dto.ArtistDTO;
+import br.tech.tickets.domain.entity.Artist;
 import br.tech.tickets.domain.entity.Show;
 import br.tech.tickets.controller.dto.ApiResponse;
 import br.tech.tickets.controller.dto.ShowDTO;
+import br.tech.tickets.mapper.ArtistMapper;
 import br.tech.tickets.mapper.ShowMapper;
 import br.tech.tickets.service.SellService;
 import br.tech.tickets.service.ShowService;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +43,13 @@ public class ShowController {
         LocalDateTime parseData = LocalDateTime.parse(date);
         List<ShowDTO> createShowRespons = showService.consultShowsByDate(parseData);
         return ResponseEntity.status(200).body(createShowRespons);
+    }
+
+    @GetMapping("/{artist}")
+    public ResponseEntity<List<ShowDTO>> getShowsByArtist(@PathVariable ArtistDTO artist){
+        Artist artistObj = ArtistMapper.toEntity(artist);
+        List<ShowDTO> shows = showService.consultShowsByArtist(artistObj);
+        return ResponseEntity.status(200).body(shows);
     }
 
     @PostMapping("/{showId}/sell")

@@ -5,11 +5,13 @@ import br.tech.tickets.controller.dto.UserDTO;
 import br.tech.tickets.exception.EmailExistsException;
 import br.tech.tickets.exception.SamePasswordException;
 import br.tech.tickets.repository.UserRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -38,6 +40,19 @@ public class UserService {
         validateFields(user);
         userRepository.save(user);
     }
+
+    public void updatePersonalInformation(UserDTO userDto) {
+        Optional<User> userOptional = userRepository.findByUsername(userDto.getUsername());
+
+        userOptional.ifPresent(user -> {
+            user.setCpf(userDto.getCpf());
+            user.setEmail(userDto.getEmail());
+            user.setPhone(userDto.getPhone());
+
+            userRepository.save(user);
+        });
+    }
+
 
     public void changePassword(User user, String newPassword) {
         if(passwordEncoder.matches(newPassword, user.getPassword())) {

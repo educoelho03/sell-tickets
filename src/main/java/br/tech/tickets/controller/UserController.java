@@ -8,17 +8,13 @@ import br.tech.tickets.service.EmailStrategyImpl;
 import br.tech.tickets.service.UserService;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
     private final UserService userService;
-
     private final EmailStrategyImpl emailStrategy;
     // private final EmailService emailService;
 
@@ -42,4 +38,19 @@ public class UserController {
 
         return ResponseEntity.status(201).body(createdUserDTO);
     }
+
+    @PutMapping("/updateInfos")
+    public ResponseEntity<Void> updatePersonalInfoUser(@RequestBody UserDTO userDTO) {
+        userService.updatePersonalInformation(userDTO);
+        return ResponseEntity.status(204).build();
+    }
+
+    // @PutMapping("/updatePassword")
+    // public ResponseEntity<Void> updateUserPassword(@RequestBody UserDTO userDTO, String newPassword){
+    //     User userObj = UserMapper.toEntity(userDTO);
+    //     userService.changePassword(userObj, newPassword);
+    //     return ResponseEntity.status(204).build();
+    // }
+
+
 }

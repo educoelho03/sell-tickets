@@ -29,5 +29,4 @@ public class EmailStrategyImpl implements EmailStrategy {
         message.setText(email.getBody());
         mailSender.send(message);
     }
-
 }

@@ -1,11 +1,15 @@
 package br.tech.tickets.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Calendar;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
 public class PasswordResetToken {
 
     private static final int EXPIRATION = 60 * 30;
@@ -37,37 +41,5 @@ public class PasswordResetToken {
         cal.setTimeInMillis(new Date().getTime()); // define o tempo atual como o tempo do calendário
         cal.add(Calendar.MINUTE, expiryTimeInMinutes); // adiciona o tempo de expiração do token em minutos
         return new Date(cal.getTime().getTime()); // retorna a data com a expiração do token
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Date getExpiryDate() {
-        return expiryDate;
-    }
-
-    public void setExpiryDate(Date expiryDate) {
-        this.expiryDate = expiryDate;
     }
 }

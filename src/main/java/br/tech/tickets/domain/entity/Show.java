@@ -14,6 +14,7 @@ public class Show {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long showId;
+    private String showName;
 
     @ManyToOne
     @JoinColumn(name = "artist_id", nullable = false)
@@ -29,8 +30,9 @@ public class Show {
     private List<Seat> seats;
 
 
-    public Show(Long showId, Artist artist, String local, LocalDateTime date, Integer availableTickets) {
+    public Show(Long showId, String showName, Artist artist, String local, LocalDateTime date, Integer availableTickets) {
         this.showId = showId;
+        this.showName = showName;
         this.artist = artist;
         this.local = local;
         this.date = date;
@@ -49,6 +51,14 @@ public class Show {
 
     public void setShowId(Long showId) {
         this.showId = showId;
+    }
+
+    public String getShowName() {
+        return showName;
+    }
+
+    public void setShowName(String showName) {
+        this.showName = showName;
     }
 
     public Artist getArtist() {

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public class ShowDTO {
 
     private ArtistDTO artist;
+    private String showName;
     private String local;
     private LocalDateTime date;
     private Integer availableTickets;
@@ -15,6 +16,14 @@ public class ShowDTO {
 
     public void setArtist(ArtistDTO artist) {
         this.artist = artist;
+    }
+
+    public String getShowName() {
+        return showName;
+    }
+
+    public void setShowName(String showName) {
+        this.showName = showName;
     }
 
     public String getLocal() {
