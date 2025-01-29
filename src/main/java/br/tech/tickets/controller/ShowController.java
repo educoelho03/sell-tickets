@@ -55,7 +55,7 @@ public class ShowController {
     @PostMapping("/{showId}/sell")
     public ResponseEntity<ApiResponse> sellTicket(@PathVariable Long showId, @RequestParam int ticketQuantity, @RequestParam int seatNumber){
         sellService.sellingTickets(showId, ticketQuantity, seatNumber);
-        return ResponseEntity.status(200).body(new ApiResponse("Venda realizada com sucesso", null));
+        return ResponseEntity.status(200).body(new ApiResponse("Purchase successfully", null));
     }
 
 }
