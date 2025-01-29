@@ -19,9 +19,7 @@ public class Role {
     @Column(name = "role_id")
     private Long roleId;
 
-    @Enumerated(EnumType.STRING)
     private String name;
-
 
     public enum Values {
 
