@@ -1,8 +1,11 @@
 package br.tech.tickets.service;
 
+import br.tech.tickets.controller.UserController;
 import br.tech.tickets.domain.entity.Artist;
+import br.tech.tickets.domain.entity.PurchasedTicket;
 import br.tech.tickets.domain.entity.Show;
 import br.tech.tickets.controller.dto.ShowDTO;
+import br.tech.tickets.domain.entity.User;
 import br.tech.tickets.mapper.ShowMapper;
 import br.tech.tickets.repository.ShowRepository;
 import org.springframework.stereotype.Service;
@@ -45,6 +48,17 @@ public class ShowService {
         }
 
         List<Show> shows = showRepository.findByDate(date);
+        return shows.stream()
+                .map(ShowMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<ShowDTO> consultShowsBoughtByUser(User user) {
+        if(user == null){
+            throw new IllegalArgumentException("The user cannot be null");
+        }
+
+        List<Show> shows = showRepository.findShowsBoughtByUsername(user.getUsername());
         return shows.stream()
                 .map(ShowMapper::toDto)
                 .collect(Collectors.toList());

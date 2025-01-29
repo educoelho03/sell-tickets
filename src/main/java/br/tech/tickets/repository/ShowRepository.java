@@ -2,7 +2,10 @@ package br.tech.tickets.repository;
 
 import br.tech.tickets.domain.entity.Artist;
 import br.tech.tickets.domain.entity.Show;
+import br.tech.tickets.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -13,4 +16,7 @@ import java.util.List;
 public interface ShowRepository extends JpaRepository<Show, Long> {
     List<Show> findByArtist(Artist artist);
     List<Show> findByDate(LocalDateTime date);
+
+    @Query("SELECT s FROM Show s JOIN Ticket t ON t.show = s JOIN PurchasedTicket pt ON pt.ticket = t WHERE pt.user.username = :username")
+    List<Show> findShowsBoughtByUsername(@Param("username") String username);
 }
