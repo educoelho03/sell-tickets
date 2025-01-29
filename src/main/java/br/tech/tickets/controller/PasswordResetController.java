@@ -1,7 +1,7 @@
 package br.tech.tickets.controller;
 
 import br.tech.tickets.controller.dto.ApiResponse;
-import br.tech.tickets.service.PasswordResetService;
+import br.tech.tickets.service.impl.PasswordResetServiceImpl;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +12,9 @@ import java.util.Map;
 @RequestMapping("/api/passwords")
 public class PasswordResetController {
 
-    private PasswordResetService passwordResetService;
+    private PasswordResetServiceImpl passwordResetService;
 
-    public PasswordResetController(PasswordResetService passwordResetService) {
+    public PasswordResetController(PasswordResetServiceImpl passwordResetService) {
         this.passwordResetService = passwordResetService;
     }
 

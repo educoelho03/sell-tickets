@@ -5,23 +5,21 @@ import br.tech.tickets.domain.entity.User;
 import br.tech.tickets.controller.dto.UserDTO;
 import br.tech.tickets.mapper.UserMapper;
 import br.tech.tickets.service.EmailStrategyImpl;
-import br.tech.tickets.service.UserService;
+import br.tech.tickets.service.impl.UserServiceImpl;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
     private final EmailStrategyImpl emailStrategy;
     // private final EmailService emailService;
 
 
-    public UserController(UserService userService, EmailStrategyImpl emailStrategy) {
+    public UserController(UserServiceImpl userService, EmailStrategyImpl emailStrategy) {
         this.userService = userService;
         this.emailStrategy = emailStrategy;
     }

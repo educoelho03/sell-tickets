@@ -1,31 +1,31 @@
-package br.tech.tickets.service;
+package br.tech.tickets.service.impl;
 
-import br.tech.tickets.domain.entity.User;
 import br.tech.tickets.controller.dto.UserDTO;
+import br.tech.tickets.domain.entity.User;
 import br.tech.tickets.exception.EmailExistsException;
 import br.tech.tickets.exception.SamePasswordException;
 import br.tech.tickets.repository.UserRepository;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import br.tech.tickets.service.interfaces.UserInterface;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserInterface {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void registerNewUser(UserDTO userDto) throws EmailExistsException {
+    @Override
+    public void registerNewUser(UserDTO userDto) {
         if(emailExists(userDto.getEmail())) {
             throw new EmailExistsException("There is an account with that email adress:" + userDto.getEmail());
         }
@@ -42,6 +42,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Override
     public void updatePersonalInformation(UserDTO userDto) {
         Optional<User> userOptional = userRepository.findByUsername(userDto.getUsername());
 
@@ -54,7 +55,7 @@ public class UserService {
         });
     }
 
-
+    @Override
     public void changePassword(User user, String newPassword) {
         if(passwordEncoder.matches(newPassword, user.getPassword())) {
             throw new SamePasswordException("Passwords must be different.");
@@ -63,6 +64,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(newPassword));
     }
 
+    @Override
     public void validateFields(User user) {
         Map<String, String> fieldsToValidate = new HashMap<>();
         fieldsToValidate.put("firstName", user.getUsername());
@@ -77,8 +79,8 @@ public class UserService {
         }
     }
 
+    @Override
     public boolean emailExists(String email) {
         return userRepository.findByEmail(email) != null;
     }
-
 }

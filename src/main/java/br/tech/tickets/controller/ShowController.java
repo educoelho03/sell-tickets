@@ -10,10 +10,9 @@ import br.tech.tickets.domain.entity.User;
 import br.tech.tickets.mapper.ArtistMapper;
 import br.tech.tickets.mapper.ShowMapper;
 import br.tech.tickets.mapper.UserMapper;
-import br.tech.tickets.service.SellService;
-import br.tech.tickets.service.ShowService;
+import br.tech.tickets.service.impl.SellServiceImpl;
+import br.tech.tickets.service.impl.ShowServiceImpl;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +23,10 @@ import java.util.List;
 @RequestMapping("/api/shows")
 public class ShowController {
 
-    private final ShowService showService;
-    private final SellService sellService;
+    private final ShowServiceImpl showService;
+    private final SellServiceImpl sellService;
 
-    public ShowController(ShowService showService, SellService sellService) {
+    public ShowController(ShowServiceImpl showService, SellServiceImpl sellService) {
         this.showService = showService;
         this.sellService = sellService;
     }
