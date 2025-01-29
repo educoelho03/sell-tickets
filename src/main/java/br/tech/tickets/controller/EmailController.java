@@ -31,7 +31,7 @@ public class EmailController {
             emailStrategy.sendEmail(email);
             return ResponseEntity.status(200).body("Email sent");
         } catch (Exception ex){
-            return ResponseEntity.badRequest().body("Error while sending email");
+            return ResponseEntity.status(400).body("Error while sending email");
         }
     }
 
@@ -42,7 +42,7 @@ public class EmailController {
             emailWithAttachStrategy.sendEmailWithAttachment(email);
             return ResponseEntity.status(200).body("Email sent.");
         } catch (Exception ex){
-            return ResponseEntity.badRequest().body("Error while sending email");
+            return ResponseEntity.status(400).body("Error while sending email");
         }
     }
 }

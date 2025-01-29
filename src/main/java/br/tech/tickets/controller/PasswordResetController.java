@@ -21,7 +21,7 @@ public class PasswordResetController {
     @PostMapping("/forgot")
     public ResponseEntity<ApiResponse> forgotPassword(@RequestParam("email") String email) throws MessagingException {
         passwordResetService.sendPasswordResetEmail(email);
-        return ResponseEntity.ok(new ApiResponse("Solicitação de alteração de senha enviada com sucesso", null));
+        return ResponseEntity.status(200).body(new ApiResponse("Solicitação de alteração de senha enviada com sucesso", null));
     }
 
     @PutMapping("/reset")
@@ -32,9 +32,9 @@ public class PasswordResetController {
 
             passwordResetService.changePassword(token, email, password);
 
-            return ResponseEntity.ok(new ApiResponse("Senha alterada com sucesso", null));
+            return ResponseEntity.status(200).body(new ApiResponse("Senha alterada com sucesso", null));
         } catch (MessagingException exception){
-            return ResponseEntity.badRequest().body(new ApiResponse("Erro ao alterar a senha: " + exception.getMessage(), null));
+            return ResponseEntity.status(400).body(new ApiResponse("Erro ao alterar a senha: " + exception.getMessage(), null));
         }
     }
 }
