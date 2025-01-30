@@ -24,8 +24,8 @@ public class ShowServiceImpl implements ShowInterface {
 
     @Override
     public void registerShow(Show show) {
-        if(show == null){
-            throw new IllegalArgumentException("The show cannot be null");
+        if(show.getShowName() == null || show.getShowName().isEmpty() || show.getArtist().getName().isEmpty() ) {
+            throw new IllegalArgumentException("The show cannot be null or empty and artist name cannot be empty");
         }
 
         showRepository.save(show);
@@ -33,8 +33,8 @@ public class ShowServiceImpl implements ShowInterface {
 
     @Override
     public List<ShowDTO> consultShowsByArtist(Artist artist) {
-        if(artist == null){
-            throw new IllegalArgumentException("The artist cannot be null");
+        if(artist.getName() == null || artist.getName().isEmpty()){
+            throw new IllegalArgumentException("The artist cannot be null or empty");
         }
 
         List<Show> shows = showRepository.findByArtist(artist);
@@ -57,8 +57,8 @@ public class ShowServiceImpl implements ShowInterface {
 
     @Override
     public List<ShowDTO> consultShowsBoughtByUser(User user) {
-        if(user == null){
-            throw new IllegalArgumentException("The user cannot be null");
+        if(user.getUsername() == null || user.getUsername().isEmpty() || user.getPassword() == null ){
+            throw new IllegalArgumentException("The user and username cannot be null or empty");
         }
 
         List<Show> shows = showRepository.findShowsBoughtByUsername(user.getUsername());
