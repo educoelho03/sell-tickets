@@ -1,10 +1,8 @@
 package br.tech.tickets.controller;
 
 import br.tech.tickets.domain.entity.Email;
-import br.tech.tickets.service.EmailService;
-import br.tech.tickets.service.EmailStrategyImpl;
-import br.tech.tickets.service.EmailWithAttachStrategyImpl;
-import java.util.logging.Logger;
+import br.tech.tickets.service.impl.EmailStrategyImpl;
+import br.tech.tickets.service.impl.EmailWithAttachStrategyImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

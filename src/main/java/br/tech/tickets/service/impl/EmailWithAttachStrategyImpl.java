@@ -1,6 +1,7 @@
-package br.tech.tickets.service;
+package br.tech.tickets.service.impl;
 
 import br.tech.tickets.domain.entity.Email;
+import br.tech.tickets.service.interfaces.EmailWithAttachStrategy;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Value;

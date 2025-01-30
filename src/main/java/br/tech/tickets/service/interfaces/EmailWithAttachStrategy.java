@@ -1,4 +1,4 @@
-package br.tech.tickets.service;
+package br.tech.tickets.service.interfaces;
 
 import br.tech.tickets.domain.entity.Email;
 import jakarta.mail.MessagingException;

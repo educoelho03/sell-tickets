@@ -4,7 +4,7 @@ import br.tech.tickets.domain.entity.Email;
 import br.tech.tickets.domain.entity.User;
 import br.tech.tickets.controller.dto.UserDTO;
 import br.tech.tickets.mapper.UserMapper;
-import br.tech.tickets.service.EmailStrategyImpl;
+import br.tech.tickets.service.impl.EmailStrategyImpl;
 import br.tech.tickets.service.impl.UserServiceImpl;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;

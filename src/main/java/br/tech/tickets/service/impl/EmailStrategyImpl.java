@@ -1,6 +1,7 @@
-package br.tech.tickets.service;
+package br.tech.tickets.service.impl;
 
 import br.tech.tickets.domain.entity.Email;
+import br.tech.tickets.service.interfaces.EmailStrategy;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,7 +21,7 @@ public class EmailStrategyImpl implements EmailStrategy {
     }
 
     @Override
-    public void sendEmail(Email email) throws MessagingException {
+    public void sendEmail(Email email) {
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setFrom(sender);
