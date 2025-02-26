@@ -1,30 +1,35 @@
-package br.tech.tickets.service;
+package br.tech.tickets.service.impl;
 
 import br.tech.tickets.domain.entity.Seat;
 import br.tech.tickets.domain.entity.Show;
 import br.tech.tickets.domain.entity.Ticket;
 import br.tech.tickets.domain.enums.TicketStatus;
-import br.tech.tickets.exception.*;
+import br.tech.tickets.exception.SeatNotAvailableException;
+import br.tech.tickets.exception.SeatNotFoundException;
+import br.tech.tickets.exception.ShowNotFoundException;
+import br.tech.tickets.exception.TicketSoldOutException;
 import br.tech.tickets.repository.ShowRepository;
 import br.tech.tickets.repository.TicketRepository;
+import br.tech.tickets.service.interfaces.SellInterface;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class SellService {
+public class SellServiceImpl implements SellInterface {
 
     private final ShowRepository showRepository;
     private final TicketRepository ticketRepository;
 
-    public SellService(TicketRepository ticketRepository, ShowRepository showRepository) {
-        this.ticketRepository = ticketRepository;
+    public SellServiceImpl(ShowRepository showRepository, TicketRepository ticketRepository) {
         this.showRepository = showRepository;
+        this.ticketRepository = ticketRepository;
     }
 
-    public void sellingTickets(Long showId, int ticketQuantity, int seatNumber){
-        Show show = findShowById(showId);
+    @Override
+    public void sellingTickets(Long showId, int ticketQuantity, int seatNumber) {
+        Show show = showRepository.findById(showId).orElseThrow(() -> new ShowNotFoundException("Show not found"));
 
         validateTicketAvailable(show, ticketQuantity);
         validateSeatAvailable(show, seatNumber);
@@ -33,8 +38,8 @@ public class SellService {
         updateAvailableTickets(show, ticketQuantity);
     }
 
-
-    private void  createAndSaveTicket(Show show, int ticketQuantity){
+    @Override
+    public void createAndSaveTicket(Show show, int ticketQuantity) {
         List<Ticket> tickets = new ArrayList<>();
 
         for(int i = 0; i < ticketQuantity; i++){
@@ -48,11 +53,8 @@ public class SellService {
         ticketRepository.saveAll(tickets);
     }
 
-    private Show findShowById(Long showId){
-        return showRepository.findById(showId).orElseThrow(() -> new ShowNotFoundException("Show Not Found"));
-    }
-
-    private void validateTicketAvailable(Show show, int ticketQuantity){
+    @Override
+    public void validateTicketAvailable(Show show, int ticketQuantity) {
         int totalSoldTickets = show.getTicket().stream()
                 .mapToInt(Ticket::getSoldTickets).sum();
 
@@ -61,9 +63,10 @@ public class SellService {
         }
     }
 
-    private void validateSeatAvailable(Show show, int seatNumber){
+    @Override
+    public void validateSeatAvailable(Show show, int seatNumber) {
         Seat seat = show.getSeat().stream().filter(
-                s -> s.getSeatNumber() == seatNumber)
+                        s -> s.getSeatNumber() == seatNumber)
                 .findFirst()
                 .orElseThrow(() -> new SeatNotFoundException("Seat Not Found"));
 
@@ -72,9 +75,9 @@ public class SellService {
         }
     }
 
-    private void updateAvailableTickets(Show show, int ticketQuantity){
+    @Override
+    public void updateAvailableTickets(Show show, int ticketQuantity) {
         show.setAvailableTickets(show.getAvailableTickets() + ticketQuantity);
         showRepository.save(show);
     }
-
 }

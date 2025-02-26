@@ -1,6 +1,6 @@
 package br.tech.tickets.exception;
 
-import br.tech.tickets.dto.ApiResponse;
+import br.tech.tickets.controller.dto.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

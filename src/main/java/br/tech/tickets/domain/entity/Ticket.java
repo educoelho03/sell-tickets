@@ -6,13 +6,14 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@Table(name = "tb_tickets")
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticketId;
 
     @ManyToOne
-    @JoinColumn(name = "showId")
+    @JoinColumn(name = "show_id")
     private Show show;
 
     private BigDecimal price;

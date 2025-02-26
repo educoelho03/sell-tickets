@@ -25,30 +25,44 @@ public class EmailService {
     }
 
 
-    public void sendEmail(Email email){
-        SimpleMailMessage message = new SimpleMailMessage();
+    //public void sendEmail(Email email){
+    //    SimpleMailMessage message = new SimpleMailMessage();
+//
+    //    message.setFrom(sender);
+    //    message.setTo(email.getRecipient());
+    //    message.setSubject(email.getSubject());
+    //    message.setText(email.getBody());
+    //    mailSender.send(message);
+    //}
 
-        message.setFrom(sender);
-        message.setTo(email.getRecipient());
-        message.setSubject(email.getSubject());
-        message.setText(email.getBody());
-        mailSender.send(message);
-    }
+    //public void sendEmailWithAttachment(Email email) throws MessagingException {
+    //    MimeMessage mimeMessage = mailSender.createMimeMessage();
+    //    MimeMessageHelper helper;
+//
+    //    helper = new MimeMessageHelper(mimeMessage, true);
+    //    helper.setFrom(sender);
+    //    helper.setTo(email.getRecipient());
+    //    helper.setSubject(email.getSubject());
+    //    helper.setText(email.getBody());
+//
+    //    FileSystemResource file = new FileSystemResource(new File(email.getAttachment()));
+    //    helper.addAttachment(file.getFilename(), file);
+//
+    //    mailSender.send(mimeMessage);
+    //}
 
-    public void sendEmailWithAttachment(Email email) throws MessagingException {
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper helper;
-
-        helper = new MimeMessageHelper(mimeMessage, true);
+    public void sendPasswordResetEmail(String recepient, String token) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();         // Cria uma nova mensagem de e-mail.
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setFrom(sender);
-        helper.setTo(email.getRecipient());
-        helper.setSubject(email.getSubject());
-        helper.setText(email.getBody());
+        helper.setTo(recepient);
+        helper.setSubject("Redefinição de senha");
 
-        FileSystemResource file = new FileSystemResource(new File(email.getAttachment()));
-        helper.addAttachment(file.getFilename(), file);
+        String text = "CORPO DO EMAIL DE REDEFINIÇAO DE SENHA";
 
-        mailSender.send(mimeMessage);
+        helper.setText(text);
+        mailSender.send(message);
+
     }
 
 }

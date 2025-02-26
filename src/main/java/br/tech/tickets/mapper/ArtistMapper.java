@@ -1,7 +1,7 @@
 package br.tech.tickets.mapper;
 
 import br.tech.tickets.domain.entity.Artist;
-import br.tech.tickets.dto.ArtistDTO;
+import br.tech.tickets.controller.dto.ArtistDTO;
 
 public class ArtistMapper {
     public static Artist toEntity(ArtistDTO dto) {

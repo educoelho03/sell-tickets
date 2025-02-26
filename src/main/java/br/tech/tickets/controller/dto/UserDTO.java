@@ -1,27 +1,18 @@
-package br.tech.tickets.dto;
+package br.tech.tickets.controller.dto;
 
 public class UserDTO {
 
-    private String firstName;
-    private String lastName;
+    private String username;
     private String email;
     private String cpf;
     private String phone;
 
-    public String getFirstName() {
-        return firstName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

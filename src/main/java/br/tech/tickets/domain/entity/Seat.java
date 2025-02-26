@@ -3,6 +3,7 @@ package br.tech.tickets.domain.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "tb_seats")
 public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
